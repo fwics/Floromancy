@@ -1,6 +1,8 @@
 package net.fwics.floromancy;
 
 import com.mojang.logging.LogUtils;
+import net.fwics.floromancy.item.ModCreativeModeTabs;
+import net.fwics.floromancy.item.ModItems;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -17,38 +19,39 @@ import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Floromancy.MOD_ID)
-public class Floromancy
-{
-    // Define mod id in a common place for everything to reference
+public class Floromancy {
     public static final String MOD_ID = "floromancy";
-    // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public Floromancy()
-    {
+    public Floromancy() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Register the commonSetup method for mod loading
+        ModItems.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
 
-        // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+
+        modEventBus.addListener(this::addCreative);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-        LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
+    private void commonSetup(final FMLCommonSetupEvent event) {
+
     }
 
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
+    private void addCreative(CreativeModeTabEvent.BuildContents event) {
+        if( event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(ModItems.SCULK_LOCK);
+        }
+        if( event.getTab() == ModCreativeModeTabs.BLOOMED_PLANTS) {
+            event.accept(ModItems.SCULK_LOCK);
+        }
+    }
+
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
+    public static class ClientModEvents {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
+        public static void onClientSetup(FMLClientSetupEvent event) {
 
         }
     }

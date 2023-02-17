@@ -1,6 +1,7 @@
 package net.fwics.floromancy;
 
 import com.mojang.logging.LogUtils;
+import net.fwics.floromancy.block.ModBlocks;
 import net.fwics.floromancy.item.ModCreativeModeTabs;
 import net.fwics.floromancy.item.ModItems;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -26,7 +27,9 @@ public class Floromancy {
     public Floromancy() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ModItems.register(modEventBus);
+        ModItems.register( modEventBus );
+
+        ModBlocks.register( modEventBus );
 
         modEventBus.addListener(this::commonSetup);
 
@@ -40,6 +43,12 @@ public class Floromancy {
     }
 
     private void addCreative(CreativeModeTabEvent.BuildContents event) {
+        if( event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS ) {
+            event.accept(ModBlocks.BLOOMING_PEDESTAL);
+        }
+        if( event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS ) {
+            event.accept(ModBlocks.BLOOMING_PEDESTAL);
+        }
         if( event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(ModItems.SCULK_LOCK);
         }

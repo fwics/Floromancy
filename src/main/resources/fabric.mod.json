@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "floromancy",
+	"version": "${version}",
+	"name": "Floromancy",
+	"description": "A magical mod that dds mystical plants and mysterious stones.",
+	"authors": [
+		"fwics"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/floromancy/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.fwics.floromancy.Floromancy"
+		],
+		"client": [
+			"net.fwics.floromancy.FloromancyClient"
+		],
+		"fabric-datagen": [
+			"net.fwics.floromancy.FloromancyDataGenerator"
+		]
+	},
+	"mixins": [
+		"floromancy.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.6",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
